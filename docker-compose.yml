@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database
+    networks:
+      - app-network
+
+  database:
+    build: ./database
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: chatdb
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+  insert-script:
+    build: ./insert-script
+    depends_on:
+      - database
+    networks:
+      - app-network
+    entrypoint: ["node", "insert-script.js"]
+
+networks:
+  app-network:
+    driver: bridge
+

@@ -1,0 +1,15 @@
+{
+  "name": "insert-script",
+  "version": "1.0.0",
+  "description": "Script d'insertion de données dans la base de données PostgreSQL",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "insert-data": "node insert-data.js"
+  },
+  "author": "Votre nom",
+  "license": "MIT",
+  "dependencies": {
+    "pg": "^8.7.1"
+  }
+}
