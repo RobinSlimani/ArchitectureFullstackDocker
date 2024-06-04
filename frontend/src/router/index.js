@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
-  // Définissez vos routes ici
+
 ];
 
 const router = createRouter({

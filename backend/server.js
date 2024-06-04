@@ -16,7 +16,6 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-// Endpoint pour obtenir les utilisateurs
 app.get('/users', async (req, res) => {
   const result = await pool.query('SELECT * FROM users');
   res.json(result.rows);
