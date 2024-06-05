@@ -11,6 +11,7 @@ services:
       - "80:80" 
     volumes:
       - ./apache/reverse-proxy.conf:/usr/local/apache2/conf/reverse-proxy.conf
+      - ./apache/src:/usr/local/apache2/htdocs
     depends_on:
       - php-backend
 
@@ -20,7 +21,9 @@ services:
       context: ./php
       dockerfile: Dockerfile
     volumes:
-      - ./:/var/www/html
+      - ./php/src/:/var/www/html/app1
+    depends_on:
+      - mysql-database
 
   mysql-database:
     container_name: bd

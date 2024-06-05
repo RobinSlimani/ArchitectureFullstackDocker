@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS utilisateurs (
     mot_de_passe VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS ami (
+CREATE TABLE IF NOT EXISTS amities (
     id INT AUTO_INCREMENT PRIMARY KEY,
     utilisateur1_id INT NOT NULL,
     utilisateur2_id INT NOT NULL,
