@@ -20,6 +20,8 @@ services:
     build:
       context: ./php
       dockerfile: Dockerfile
+    ports:
+      - "8080:80"
     volumes:
       - ./php/src/:/var/www/html/app1
     depends_on:

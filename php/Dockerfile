@@ -13,7 +13,6 @@ RUN echo "ServerName localhost" >> /usr/local/apache2/conf/httpd.conf
 RUN echo "error_reporting(E_ALL);" >> /etc/php/8.2/apache2/php.ini
 RUN echo "ini_set('display_errors', 1);" >> /etc/php/8.2/apache2/php.ini
 
-RUN rm /var/www/html/index.html
-COPY . /var/www/html/app1
+COPY ./app1 /usr/local/apache2/htdocs/
 
-WORKDIR /var/www/html/app1
+WORKDIR /usr/local/apache2/htdocs/app1
