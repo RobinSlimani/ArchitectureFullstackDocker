@@ -1,42 +1,32 @@
-version: '3.8'
+version: '3'
 
 services:
-  frontend:
-    build: ./frontend
-    ports:
-      - "80:80"
-    networks:
-      - app-network
 
-  backend:
-    build: ./backend
+  apache-frontend:
+    container_name: apache
+    build:
+      context: ./apache
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "80:80" 
+    volumes:
+      - ./apache/reverse-proxy.conf:/usr/local/apache2/conf/reverse-proxy.conf
     depends_on:
-      - database
-    networks:
-      - app-network
+      - php-backend
 
-  database:
-    build: ./database
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: chatdb
-    ports:
-      - "5432:5432"
-    networks:
-      - app-network
+  php-backend:
+    container_name: php
+    build:
+      context: ./php
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/var/www/html
 
-  insert-script:
-    build: ./insert-script
-    depends_on:
-      - database
-    networks:
-      - app-network
-    entrypoint: ["node", "insert-script.js"]
-
-networks:
-  app-network:
-    driver: bridge
+  mysql-database:
+    container_name: bd
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
 
