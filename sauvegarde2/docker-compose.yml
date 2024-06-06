@@ -10,8 +10,7 @@ services:
     ports:
       - "8081:80"
     depends_on:
-      - php-backend1
-      - php-backend2
+      - php-backend
 
   front-backend2:
     container_name: my-nginx-container
@@ -21,26 +20,15 @@ services:
     ports:
       - "8080:80"
     depends_on:
-      - php-backend1
-      - php-backend2
+      - php-backend
 
-  php-backend1:
-    container_name: my-php-container1
+  php-backend:
+    container_name: my-php-container
     build:
       context: ./php
       dockerfile: Dockerfile
     ports:
-      - "81:80"
-    depends_on:
-      - mysql-database
-
-  php-backend2:
-    container_name: my-php-container2
-    build:
-      context: ./php
-      dockerfile: Dockerfile
-    ports:
-      - "82:80"
+      - "80:80"
     depends_on:
       - mysql-database
 
@@ -49,13 +37,3 @@ services:
     build:
       context: ./mysql
       dockerfile: Dockerfile
-
-  phpmyadmin:
-    container_name: my-phpmyadmin-container
-    build:
-      context: ./phpmyadmin
-      dockerfile: Dockerfile
-    ports:
-      - "8082:80"
-    environment:
-      PMA_HOST: mysql-database
