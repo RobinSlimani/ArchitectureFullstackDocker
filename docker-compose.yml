@@ -29,8 +29,8 @@ services:
     build:
       context: ./php
       dockerfile: Dockerfile
-    ports:
-      - "81:80"
+        #  ports:
+      #     - "81:80"
     depends_on:
       - mysql-database
 
@@ -39,8 +39,8 @@ services:
     build:
       context: ./php
       dockerfile: Dockerfile
-    ports:
-      - "82:80"
+        #    ports:
+      #      - "82:80"
     depends_on:
       - mysql-database
 
