@@ -1,5 +1,7 @@
 # Instructions pour construire et exécuter l’application
 
+HARY Alexandre - SLIMANI Robin
+
 ## Prérequis
 
 - Docker et Docker Compose installés sur votre machine.
