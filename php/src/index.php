@@ -1,9 +1,11 @@
 <?php
 ob_start();
 
+//comme dans tous les autres fichiers il aurait été bien de faire un fichier pour faire une connection et de le réutiliser ici à chaque fois mais par manque de temps nous l'avons pas fais.
+
 $servername = "my-mysql-container";
 $username = "root";
-$password = "education";
+$password = "root";
 $dbname = "contacts_db";
 
 try {

@@ -3,7 +3,7 @@ ob_start();
 
 $servername = "my-mysql-container";
 $username = "root";
-$password = "education";
+$password = "root";
 $dbname = "contacts_db";
 
 try {
