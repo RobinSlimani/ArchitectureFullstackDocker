@@ -1,65 +1,49 @@
-# ArchitectureFullstackDocker
+# Instructions pour construire et exécuter l’application
 
-Instructions pour construire et exécuter l’application
-Prérequis
+## Prérequis
 
-    Docker et Docker Compose installés sur votre machine.
+- Docker et Docker Compose installés sur votre machine.
 
-Étapes pour construire et exécuter l'application
+## Étapes pour construire et exécuter l'application
 
-    Cloner le dépôt
+1. Cloner le dépôt
+    ```bash
+    git clone https://github.com/RobinSlimani/ArchitectureFullstackDocker.git
+    cd ArchitectureFullstackDocker
+    ```
 
-	git clone https://github.com/RobinSlimani/ArchitectureFullstackDocker.git
-	cd ArchitectureFullstackDocker
+2. Construire les conteneurs Docker
+    ```bash
+    sh lance.sh
+    ```
+    Il est possible de lancer directement le `lance.sh` avec `$sh lance.sh`. Celui-ci va faire une suppression des images et conteneurs lancés par l'application si elle avait déjà été lancée, sinon il va simplement démarrer l'application avec `docker compose up`.
 
-    Construire les conteneurs Docker
+3. Accéder à l'application
+    - **Front-end :** Accédez à [http://localhost:8080](http://localhost:8080) (nginx) ou [http://localhost:8081](http://localhost:8081) (apache)
+    - **Base de données :** Il y a un phpMyAdmin accessible depuis [http://localhost:8082](http://localhost:8082) (ce n'est pas très sécurisé mais on trouvait cela intéressant d'avoir une version visuelle des données).
 
-	docker-compose build
-    Démarrer les conteneurs Docker
+4. Arrêter les conteneurs
+    ```bash
+    docker compose down --rmi local
+    ```
+    Ou alors, simplement si on veut redémarrer l'application, on peut faire `$sh lance.sh`.
 
-	docker-compose up
+## Structure du projet
 
-    Accéder à l'application
+- `apache/` : Contient le serveur apache (front-end) avec le Dockerfile pour créer l'image.
+- `nginx/` : Contient le serveur nginx (front-end) comme l'apache.
+- `php/` : Contient l'application et fait donc office de back-end. C'est avec l'image créée par le Dockerfile qu'on fait 2 conteneurs php.
+- `phpmyadmin/` : Contient le phpMyAdmin qui permet de voir la base de données.
+- `mysql/` : Contient la méthode de création de la base de données et l'image MySQL.
+- `docker-compose.yml` : Fichier de configuration pour orchestrer les conteneurs Docker.
 
-	Front-end : Accédez à http://localhost:8080
-	Back-end : L'API est accessible à http://localhost:5000
-	Base de données : Non accessible directement pour des raisons de sécurité
+## Docker
 
-    Arrêter les conteneurs
+- **Isolation :** Chaque composant de l'application est isolé dans un conteneur Docker distinct pour une meilleure gestion et une isolation des dépendances.
+- **Communication restreinte :** La base de données ne communique qu'avec le back-end, pour éviter l'exposition directe à l'extérieur.
 
-	docker-compose down
+## Justification des ports
 
-Structure du projet
+- **8080 / 8081 / 8082 :** Ce sont les ports standards pour une connexion web même si on aurait aussi pu prendre le port 80 qui est le port de base de http.
+- Les ports de la base de données et autres communications internes ne sont pas exposés publiquement, pour réduire les problèmes de sécurité.
 
-    frontend/ : Contient le code source Vue.js pour l'interface utilisateur.
-    backend/ : Contient le code source du serveur applicatif, probablement en Node.js/Express.
-    database/ : Contient les configurations pour la base de données PostgreSQL.
-    docker-compose.yml : Fichier de configuration pour orchestrer les conteneurs Docker.
-
-Scripts supplémentaires
-
-    insert-script.sh : Script d'insertion de données initiales dans la base de données.
-    clean.sh : Script pour nettoyer les données de la base de données.
-
-Justification des choix techniques et configurations de sécurité
-
-    Séparation des responsabilités :
-        Front-end : Utilisation de Vue.js pour une interface utilisateur réactive.
-        Back-end : Node.js/Express pour une gestion efficace des requêtes HTTP et de la logique métier.
-        Base de données : PostgreSQL pour une gestion robuste et fiable des données.
-
-Docker :
-
-    Isolation : Chaque composant de l'application est isolé dans un conteneur Docker distinct pour une meilleure gestion et une isolation des dépendances.
-    Scalabilité : La configuration Docker permet de scaler les services individuellement selon les besoins.
-
-Sécurité :
-    Fermeture des ports non nécessaires : Seuls les ports essentiels (8080 pour le front-end, 5000 pour le back-end) sont ouverts. La base de données n'est pas directement accessible de l'extérieur.
-
-    Communication restreinte : La base de données ne communique qu'avec le back-end, évitant toute exposition directe à l'extérieur.
-
-    Justification des ports :
-
-    8080 : Port standard pour les applications web front-end, nécessaire pour accéder à l'interface utilisateur.
-    5000 : Utilisé par le serveur back-end pour gérer les requêtes API.
-    Ports internes : Les ports de la base de données et autres communications internes ne sont pas exposés publiquement, minimisant les risques de sécurité.
