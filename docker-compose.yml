@@ -59,3 +59,8 @@ services:
       - "8082:80"
     environment:
       PMA_HOST: mysql-database
+
+  python:
+    build: ./insert
+    depends_on:
+      - mysql-database
